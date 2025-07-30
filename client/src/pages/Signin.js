@@ -3,20 +3,31 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function Signin() {
-  const [email, setEmail]       = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5001/api/auth/signin', { email, password });
+      const { data } = await axios.post('/api/auth/signin', {
+  email,
+  password
+});
+
+
+      // Store login data in localStorage
       localStorage.setItem('token', data.token);
       localStorage.setItem('name', data.name);
       localStorage.setItem('email', data.email);
+
+      // Redirect after successful login
       navigate('/');
     } catch (err) {
-      alert(err.response.data.error);
+      console.error('Signin error:', err);
+      const errorMessage =
+        err.response?.data?.error || err.message || 'Signin failed. Try again.';
+      alert(errorMessage);
     }
   };
 

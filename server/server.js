@@ -24,13 +24,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 const app = express();
-app.use(cors());
+
+// ✅ 3️⃣ CORS setup — allow only frontend (change URL if needed)
+app.use(cors({
+  origin: 'http://localhost:3000', // Change to your frontend domain if deployed
+  credentials: true
+}));
+
+// ✅ 4️⃣ Parse JSON bodies
 app.use(express.json());
 
-// 3️⃣ Serve images from the absolute path
+// ✅ 5️⃣ Serve uploaded images
 app.use('/uploads', express.static(uploadDir));
 
-// 4️⃣ Connect to MongoDB
+// ✅ 6️⃣ Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser:    true,
   useUnifiedTopology: true
@@ -38,10 +45,10 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log('MongoDB connected'))
 .catch(err => console.error('MongoDB error:', err.message));
 
-// 5️⃣ Route mounting
+// ✅ 7️⃣ API routes
 app.use('/api/auth',  require('./routes/auth'));
 app.use('/api/posts', upload.single('image'), require('./routes/posts'));
 
-// 6️⃣ Start server
-const port = process.env.PORT || 5001;
-app.listen(port, () => console.log(`Server running on http://localhost:${port}`));
+// ✅ 8️⃣ Start the server
+const PORT = process.env.PORT || 5002;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

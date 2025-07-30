@@ -22,13 +22,14 @@ export default function PostDetail() {
 
   return (
     <div className="card mb-4 shadow-sm">
-      {post.imagePath && 
+      {post.imagePath && (
+  <img
+    src={`http://localhost:5002/${post.imagePath}`}
+    className="card-img-top"
+    alt={post.title}
+  />
+)}
 
-}`}
-          className="card-img-top"
-          alt={post.title}
-        />
-      )}
       <div className="card-body">
         <h2 className="card-title">{post.title}</h2>
         <p className="text-muted mb-2">Category: {post.category}</p>

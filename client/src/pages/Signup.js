@@ -3,20 +3,37 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
-  const [name, setName]       = useState('');
-  const [email, setEmail]     = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+  await axios.post('/api/auth/signup', { name, email, password });
 
-  const handleSubmit = async e => {
-    e.preventDefault();
-    try {
-      await axios.post('http://localhost:5001/api/auth/signup', { name, email, password });
-      navigate('/signin');
-    } catch (err) {
-      alert(err.response.data.error);
+    navigate('/signin');
+  } catch (err) {
+    console.error('Full error:', err); // This is important
+
+    let errorMessage = 'Signup failed. Please try again.';
+
+    // Safely check if response and data exist
+    if (err.response && err.response.data) {
+      errorMessage =
+        err.response.data.error ||
+        err.response.data.message ||
+        errorMessage;
+    } else if (err.message) {
+      errorMessage = err.message;
     }
-  };
+
+    alert(errorMessage);
+  }
+};
+
+
+
 
   return (
     <form onSubmit={handleSubmit}>

@@ -7,7 +7,7 @@ const getUserId = header => {
   if (!header) return null;
   try {
     const token = header.split(' ')[1];
-    return jwt.verify(token, process.env.JWT_SECRET).id;
+ return jwt.verify(token, process.env.JWT_SECRET).userId;
   } catch {
     return null;
   }

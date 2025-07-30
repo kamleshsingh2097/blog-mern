@@ -43,6 +43,8 @@ export default function CreatePost() {
   const handleSubmit = async e => {
     e.preventDefault();
     const token = localStorage.getItem('token');
+    const formData = new FormData();
+
     //const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
