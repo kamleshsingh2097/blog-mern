@@ -13,14 +13,12 @@ const getUserId = header => {
   }
 };
 
-// GET /api/posts
-// • if logged in → only that user’s posts (drafts + published)
-// • if not → only published posts
+
 router.get('/', async (req, res) => {
   const userId = getUserId(req.headers.authorization);
   const filter = userId
     ? { author: userId }
-    : { status: 'published' };      // only published for public
+    : { status: 'published' };     
   const posts = await Post.find(filter)
     .populate('author', 'name email');
   res.json(posts);
