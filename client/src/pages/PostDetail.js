@@ -7,16 +7,16 @@ export default function PostDetail() {
   const [post, setPost] = useState(null);
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    axios.get('call the api here', {
-      headers: token ? { Authorization: `Bearer ${token}` } : {}
-    })
-    .then(res => {
-      const found = res.data.find(p => p._id === id);
-      setPost(found);
-    })
-    .catch(console.error);
-  }, [id, token]);
+useEffect(() => {
+  axios.get(`http://localhost:5002/api/posts/${id}`, {
+    headers: token ? { Authorization: `Bearer ${token}` } : {}
+  })
+  .then(res => {
+    setPost(res.data);
+  })
+  .catch(console.error);
+}, [id, token]);
+
 
   if (!post) return <p>Loading…</p>;
 

@@ -65,6 +65,19 @@ router.put('/:id', requireAuth, async (req, res) => {
   res.json(post);
 });
 
+// GET /api/posts/:id → fetch a single post
+router.get('/:id', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id)
+      .populate('author', 'name email');
+    if (!post) return res.status(404).json({ error: 'Not found' });
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+
 // DELETE
 router.delete('/:id', requireAuth, async (req, res) => {
   const post = await Post.findById(req.params.id);
