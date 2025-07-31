@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
 axios
-  .get('http://localhost:5001/api/posts', {
+  .get('http://localhost:5002/api/posts', {
 
         headers: token ? { Authorization: `Bearer ${token}` } : {}
       })
@@ -19,7 +19,7 @@ axios
 
   const handleDelete = async id => {
     if (!window.confirm('Delete this post?')) return
-    await axios.delete(`http://localhost:5001/api/posts/${id}`, {
+    await axios.delete(`http://localhost:5002/api/posts/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
 setPosts(p => p.filter(post => post._id !== id))
@@ -63,7 +63,7 @@ setPosts(p => p.filter(post => post._id !== id))
           >
             {p.imagePath && (
               <img
-               src={`http://localhost:5001/uploads/${p.imagePath}`}
+               src={`http://localhost:5002/uploads/${p.imagePath}`}
 
                 alt={p.title}
                 style={{ width: '100%', height: 180, objectFit: 'cover' }}

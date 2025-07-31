@@ -24,7 +24,7 @@ export default function CreatePost() {
   useEffect(() => {
     if (isEdit) {
       const token = localStorage.getItem('token');
-      axios.get(`http://localhost:5001/api/____fill in___`, {
+      axios.get(`http://localhost:5002/api/____fill in___`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(res => {
@@ -54,8 +54,8 @@ export default function CreatePost() {
 
     try {
       const url    = isEdit
-        ? `http://localhost:5001/api/posts/${id}`
-        : 'http://localhost:5001/api/posts';
+        ? `http://localhost:5002/api/posts/${id}`
+        : 'http://localhost:5002/api/posts';
       const method = isEdit ? 'put' : 'post';
       await axios[method](url, formData, {
         headers: {
